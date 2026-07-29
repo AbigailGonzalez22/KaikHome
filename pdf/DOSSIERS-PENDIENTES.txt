@@ -1,0 +1,17 @@
+KAIK HOME — DOSSIERS PDF PENDIENTES DE SUBIR
+===============================================
+Esta carpeta aloja los dossiers descargables de cada promoción. Los botones
+"Descargar dossier" del hero de bargas.html y mentrida.html ya apuntan a
+estos nombres de archivo con el atributo `download`, así que al hacer clic
+el navegador descarga el PDF directamente.
+
+Subí acá los archivos con estos nombres EXACTOS:
+
+  - diana-residencial-dossier.pdf      → Dossier general de Diana Residencial (Bargas)
+  - residencial-mentrida-dossier.pdf   → Dossier general de Residencial Méntrida
+
+Podés borrar este archivo una vez subidos los PDF reales.
+
+Nota: las tipologías de bargas.html ya no descargan un PDF individual por
+vivienda; ahora usan el botón "Ver planos", que muestra las imágenes de
+planos definidas en img/IMAGENES-PENDIENTES.txt.

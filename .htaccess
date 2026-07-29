@@ -1,0 +1,76 @@
+# ==========================================================================
+# KAIK HOME — Configuración Apache (SiteGround)
+# ==========================================================================
+
+# --------------------------------------------------------------------------
+# 1. FORZAR HTTPS
+# --------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Forzar HTTPS en todas las peticiones
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # --------------------------------------------------------------------
+  # 2. WWW <-> NO-WWW (dejar descomentado solo UNO de los dos bloques)
+  # --------------------------------------------------------------------
+
+  # OPCIÓN A: redirigir de www a no-www (descomentar si se usa kaikhome.com)
+  # RewriteCond %{HTTP_HOST} ^www\.kaikhome\.com$ [NC]
+  # RewriteRule ^(.*)$ https://kaikhome.com/$1 [L,R=301]
+
+  # OPCIÓN B: redirigir de no-www a www (descomentar si se usa www.kaikhome.com)
+  # RewriteCond %{HTTP_HOST} ^kaikhome\.com$ [NC]
+  # RewriteRule ^(.*)$ https://www.kaikhome.com/$1 [L,R=301]
+
+  # --------------------------------------------------------------------
+  # 3. URLS LIMPIAS (opcional) — permite que /bargas sirva bargas.html
+  # Descomentar estas líneas si se quiere quitar la extensión .html de la URL
+  # --------------------------------------------------------------------
+  # RewriteCond %{REQUEST_FILENAME} !-f
+  # RewriteCond %{REQUEST_FILENAME} !-d
+  # RewriteRule ^([^/.]+)$ $1.html [L]
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 4. COMPRESIÓN GZIP / DEFLATE
+# --------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 5. CACHÉ DE NAVEGADOR (1 año para estáticos, immutable)
+# --------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg          "access plus 1 year"
+  ExpiresByType image/png           "access plus 1 year"
+  ExpiresByType image/webp          "access plus 1 year"
+  ExpiresByType image/svg+xml       "access plus 1 year"
+  ExpiresByType text/css            "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/html           "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(jpg|jpeg|png|webp|svg|css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 6. SEGURIDAD BÁSICA
+# --------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Página de error 404 personalizada (opcional: crear 404.html si se desea)
+# ErrorDocument 404 /404.html
