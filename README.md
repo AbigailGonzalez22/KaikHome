@@ -108,3 +108,4 @@ Los bloques de video muestran una imagen estática mientras el atributo `data-vi
 - SEO: cada página tiene title, meta description, canonical, Open Graph, Twitter Card y JSON-LD (schema.org) propios.
 - **Color de marca**: el verde principal (botones, links, íconos, acentos) es la variable `--green-dark` en `css/styles.css`, actualmente `#558f6e`. Cambiar solo esa variable actualiza todo el sitio.
 - **Animaciones**: las secciones con clase `.reveal` aparecen con un fade + desplazamiento sutil al hacer scroll (controlado por `IntersectionObserver` en `js/main.js`). Los botones tienen un barrido de brillo al pasar el mouse y un pequeño "hundimiento" al hacer clic. Todo respeta `prefers-reduced-motion` para accesibilidad.
+# KaikHome
