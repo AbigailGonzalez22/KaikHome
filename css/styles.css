@@ -726,7 +726,16 @@ textarea:focus-visible {
 }
 .planos-overlay.is-open .planos-panel { transform: scale(1); }
 .planos-panel h3 { font-size: 22px; font-weight: 800; margin-bottom: 20px; padding-right: 40px; }
-.planos-panel img { width: 100%; border-radius: var(--radius-lg); display: block; background: var(--paper-2); }
+.planos-panel img {
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  display: block;
+  margin: 0 auto;
+  background: var(--paper-2);
+}
 .planos-close {
   position: absolute;
   top: 20px;
