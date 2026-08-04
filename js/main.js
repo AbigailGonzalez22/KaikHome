@@ -172,6 +172,45 @@
     });
   });
 
+  /* ---------- Lightbox: al tocar/clickear un plano, se ve a pantalla completa ---------- */
+  var imageLightbox = document.getElementById('image-lightbox');
+  if (imageLightbox) {
+    var lightboxImg = imageLightbox.querySelector('.image-lightbox-img');
+    var lightboxCloseBtn = imageLightbox.querySelector('.image-lightbox-close');
+
+    var openLightbox = function (src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      imageLightbox.hidden = false;
+      document.body.classList.add('no-scroll');
+      requestAnimationFrame(function () { imageLightbox.classList.add('is-open'); });
+    };
+
+    var closeLightbox = function () {
+      imageLightbox.classList.remove('is-open');
+      /* Si el overlay de planos sigue abierto detrás, mantenemos el scroll bloqueado */
+      if (!document.querySelector('.planos-overlay.is-open')) {
+        document.body.classList.remove('no-scroll');
+      }
+      window.setTimeout(function () {
+        imageLightbox.hidden = true;
+        lightboxImg.src = '';
+      }, 250);
+    };
+
+    document.querySelectorAll('.planos-panel img').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
+    });
+
+    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+    imageLightbox.addEventListener('click', function (e) {
+      if (e.target === imageLightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && imageLightbox.classList.contains('is-open')) closeLightbox();
+    });
+  }
+
   /* ---------- Envío de formularios de contacto por fetch ---------- */
   document.querySelectorAll('.contact-form').forEach(function (form) {
     form.addEventListener('submit', function (e) {

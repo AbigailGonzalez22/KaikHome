@@ -735,6 +735,7 @@ textarea:focus-visible {
   display: block;
   margin: 0 auto;
   background: var(--paper-2);
+  cursor: zoom-in;
 }
 .planos-close {
   position: absolute;
@@ -791,6 +792,49 @@ body.no-scroll { overflow: hidden; }
   cursor: pointer;
 }
 .planos-carousel-dot.is-active { background: var(--green-dark); }
+
+/* Lightbox: imagen de plano a pantalla completa ------------------------------ */
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-smooth);
+}
+.image-lightbox[hidden] { display: none; }
+.image-lightbox.is-open { opacity: 1; }
+.image-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.image-lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s ease;
+}
+.image-lightbox-close:hover { background: rgba(255, 255, 255, 0.3); }
 
 /* Video / Tour virtual ------------------------------------------------------- */
 .video-section .container { max-width: 960px; }
