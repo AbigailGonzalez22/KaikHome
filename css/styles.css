@@ -248,6 +248,59 @@ textarea:focus-visible {
 }
 .main-nav a:hover, .main-nav a[aria-current="page"] { color: var(--green-dark); }
 
+.nav-dropdown { position: relative; }
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.nav-dropdown-toggle svg { flex-shrink: 0; transition: transform 0.2s var(--ease-smooth); }
+.nav-dropdown-toggle.is-active,
+.nav-dropdown-toggle:hover,
+.nav-dropdown.is-open .nav-dropdown-toggle { color: var(--green-dark); }
+.nav-dropdown.is-open .nav-dropdown-toggle svg { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  min-width: 170px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow-strong);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth), visibility 0.2s;
+}
+.nav-dropdown-menu a {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.nav-dropdown-menu a:hover, .nav-dropdown-menu a[aria-current="page"] {
+  background: var(--paper-2);
+  color: var(--green-dark);
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown.is-open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
 .header-actions { display: flex; align-items: center; gap: 18px; }
 .social-icons { display: flex; align-items: center; gap: 14px; }
 .social-icons a {
@@ -281,6 +334,27 @@ textarea:focus-visible {
   border-bottom: 1px solid rgba(27,28,28,0.06);
 }
 .mobile-nav .header-actions { margin-top: 12px; justify-content: flex-start; gap: 20px; }
+
+.mobile-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 4px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(27,28,28,0.06);
+  cursor: pointer;
+}
+.mobile-nav-toggle.is-active { color: var(--green-dark); }
+.mobile-nav-toggle svg { flex-shrink: 0; transition: transform 0.2s var(--ease-smooth); }
+.mobile-nav-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.mobile-nav-submenu { display: flex; flex-direction: column; }
+.mobile-nav-submenu[hidden] { display: none; }
+.mobile-nav-submenu a { padding-left: 20px; }
 
 /* 6. HERO INICIO --------------------------------------------------------------- */
 .hero {

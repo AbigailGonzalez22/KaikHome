@@ -26,6 +26,42 @@
     });
   }
 
+  /* ---------- Submenú "Promociones" dentro del menú móvil ---------- */
+  document.querySelectorAll('.mobile-nav-toggle').forEach(function (submenuToggle) {
+    var submenu = document.getElementById(submenuToggle.getAttribute('aria-controls'));
+    if (!submenu) return;
+    submenuToggle.addEventListener('click', function () {
+      var isOpen = submenuToggle.getAttribute('aria-expanded') === 'true';
+      submenuToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      submenu.hidden = isOpen;
+    });
+  });
+
+  /* ---------- Dropdown "Promociones" del menú de escritorio ---------- */
+  document.querySelectorAll('.nav-dropdown').forEach(function (dropdown) {
+    var dropdownToggle = dropdown.querySelector('.nav-dropdown-toggle');
+    if (!dropdownToggle) return;
+
+    var closeDropdown = function () {
+      dropdown.classList.remove('is-open');
+      dropdownToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    dropdownToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.toggle('is-open');
+      dropdownToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target)) closeDropdown();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDropdown();
+    });
+  });
+
   /* ---------- Animaciones sutiles al hacer scroll (.reveal) ---------- */
   var revealTargets = document.querySelectorAll('.reveal');
   var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

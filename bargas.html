@@ -62,8 +62,16 @@
 
       <nav class="main-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
-        <a href="bargas.html" aria-current="page">Bargas</a>
-        <a href="mentrida.html">Méntrida</a>
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-toggle is-active" aria-expanded="false" aria-controls="promociones-menu">
+            Promociones
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu" id="promociones-menu">
+            <a href="bargas.html" aria-current="page">Bargas</a>
+            <a href="mentrida.html">Méntrida</a>
+          </div>
+        </div>
       </nav>
 
       <div class="header-actions">
@@ -84,8 +92,16 @@
 
     <nav class="mobile-nav" aria-label="Navegación móvil">
       <a href="index.html">Inicio</a>
-      <a href="bargas.html" aria-current="page">Bargas</a>
-      <a href="mentrida.html">Méntrida</a>
+      <div class="mobile-nav-group">
+        <button type="button" class="mobile-nav-toggle is-active" aria-expanded="true" aria-controls="mobile-promociones">
+          Promociones
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="mobile-nav-submenu" id="mobile-promociones">
+          <a href="bargas.html" aria-current="page">Bargas</a>
+          <a href="mentrida.html">Méntrida</a>
+        </div>
+      </div>
       <div class="header-actions">
         <div class="social-icons">
           <a href="https://www.facebook.com/kaikhome/" target="_blank" rel="noopener" aria-label="Facebook de Kaik Home">
