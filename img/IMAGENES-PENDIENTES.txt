@@ -27,6 +27,14 @@ INICIO (index.html)
   - card-mentrida.jpg      → 570x400px aprox. Foto de la promoción Méntrida.
   - card-bargas.jpg        → 570x400px aprox. Foto de la promoción Bargas.
 
+PRÓXIMAMENTE (index.html)
+  - card-proximamente-sanrafael.jpg   → 570x400px aprox. Chalet independiente
+                              en Los Ángeles de San Rafael.
+  - card-proximamente-parla.jpg       → 570x400px aprox. Vivienda plurifamiliar
+                              en Parla.
+  - card-proximamente-casarrubios.jpg → 570x400px aprox. Vivienda unifamiliar
+                              en Casarrubios del Monte.
+
 BARGAS (bargas.html)
   - hero-bargas.jpg        → Imagen de fondo del hero (usada como background-image).
   - bargas-tipo1.jpg       → 560x320px aprox. Vivienda de una planta.

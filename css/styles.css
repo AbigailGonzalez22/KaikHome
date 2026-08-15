@@ -455,6 +455,18 @@ textarea:focus-visible {
   font-size: 14px;
 }
 
+/* Próximamente (index) */
+.promo-grid-upcoming { grid-template-columns: repeat(3, 1fr); }
+.promo-card-upcoming { cursor: default; }
+.promo-card-upcoming:hover { transform: none; box-shadow: var(--shadow-soft); }
+.promo-card-upcoming:hover img { transform: none; }
+.promo-upcoming-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+}
+
 /* Somos Kaik Home (index) */
 .about-block { background: var(--paper); text-align: center; }
 .about-block .container { max-width: 720px; }

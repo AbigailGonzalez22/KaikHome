@@ -52,6 +52,39 @@
     </div>
   </section>
 
+  <!-- ==================== PRÓXIMAMENTE ==================== -->
+  <section class="section" id="proximamente">
+    <div class="container">
+      <div class="section-head">
+        <h2>Próximamente</h2>
+        <p>Nuevas promociones que estamos preparando en la región.</p>
+      </div>
+      <div class="promo-grid promo-grid-upcoming">
+        <div class="promo-card promo-card-upcoming reveal">
+          <img src="/img/card-proximamente-sanrafael.jpg" alt="Chalet independiente en Los Ángeles de San Rafael, próxima promoción de Kaik Home" width="570" height="400" loading="lazy">
+          <span class="badge badge-mint promo-upcoming-badge">Próximamente</span>
+          <div class="promo-content">
+            <h3>Chalet independiente en Los Ángeles de San Rafael</h3>
+          </div>
+        </div>
+        <div class="promo-card promo-card-upcoming reveal reveal-delay-1">
+          <img src="/img/card-proximamente-parla.jpg" alt="Vivienda plurifamiliar en Parla, próxima promoción de Kaik Home" width="570" height="400" loading="lazy">
+          <span class="badge badge-mint promo-upcoming-badge">Próximamente</span>
+          <div class="promo-content">
+            <h3>Vivienda plurifamiliar en Parla</h3>
+          </div>
+        </div>
+        <div class="promo-card promo-card-upcoming reveal reveal-delay-2">
+          <img src="/img/card-proximamente-casarrubios.jpg" alt="Vivienda unifamiliar en Casarrubios del Monte, próxima promoción de Kaik Home" width="570" height="400" loading="lazy">
+          <span class="badge badge-mint promo-upcoming-badge">Próximamente</span>
+          <div class="promo-content">
+            <h3>Vivienda unifamiliar en Casarrubios del Monte</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== SOMOS KAIK HOME ==================== -->
   <section class="section about-block" id="quienes-somos">
     <div class="container reveal">

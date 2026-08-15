@@ -21,6 +21,7 @@ $isPromo = in_array($activeNav, ['bargas', 'mentrida'], true);
           <a href="/mentrida"<?= $activeNav === 'mentrida' ? ' aria-current="page"' : '' ?>>Méntrida</a>
         </div>
       </div>
+      <a href="/#proximamente">Próximamente</a>
     </nav>
 
     <div class="header-actions">
@@ -51,6 +52,7 @@ $isPromo = in_array($activeNav, ['bargas', 'mentrida'], true);
         <a href="/mentrida"<?= $activeNav === 'mentrida' ? ' aria-current="page"' : '' ?>>Méntrida</a>
       </div>
     </div>
+    <a href="/#proximamente">Próximamente</a>
     <div class="header-actions">
       <div class="social-icons">
         <a href="https://www.facebook.com/kaikhome/" target="_blank" rel="noopener" aria-label="Facebook de Kaik Home">
