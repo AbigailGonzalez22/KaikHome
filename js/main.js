@@ -233,7 +233,7 @@
 
       var formData = new FormData(form);
 
-      fetch('php/contact.php', {
+      fetch('/contact', {
         method: 'POST',
         body: formData
       })

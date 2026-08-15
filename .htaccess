@@ -20,17 +20,23 @@
   # RewriteCond %{HTTP_HOST} ^www\.kaikhome\.com$ [NC]
   # RewriteRule ^(.*)$ https://kaikhome.com/$1 [L,R=301]
 
-  # OPCIÓN B: redirigir de no-www a www (descomentar si se usa www.kaikhome.com)
-  # RewriteCond %{HTTP_HOST} ^kaikhome\.com$ [NC]
-  # RewriteRule ^(.*)$ https://www.kaikhome.com/$1 [L,R=301]
+  # OPCIÓN B: redirigir de no-www a www (activo — se usa www.kaikhome.com)
+  RewriteCond %{HTTP_HOST} ^kaikhome\.com$ [NC]
+  RewriteRule ^(.*)$ https://www.kaikhome.com/$1 [L,R=301]
 
   # --------------------------------------------------------------------
-  # 3. URLS LIMPIAS (opcional) — permite que /bargas sirva bargas.html
-  # Descomentar estas líneas si se quiere quitar la extensión .html de la URL
+  # 3. URLS LIMPIAS + FRONT CONTROLLER (MVC)
   # --------------------------------------------------------------------
-  # RewriteCond %{REQUEST_FILENAME} !-f
-  # RewriteCond %{REQUEST_FILENAME} !-d
-  # RewriteRule ^([^/.]+)$ $1.html [L]
+
+  # 301: URLs .html viejas -> ruta limpia (compatibilidad con enlaces/índices previos)
+  RewriteCond %{THE_REQUEST} \s/+(index|bargas|mentrida)\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+  RewriteRule ^(bargas|mentrida)\.html$ /$1 [R=301,L]
+
+  # Todo lo que no sea un archivo o directorio real pasa por index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 
 # --------------------------------------------------------------------------
@@ -72,5 +78,4 @@
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Página de error 404 personalizada (opcional: crear 404.html si se desea)
-# ErrorDocument 404 /404.html
+# El 404 ahora lo maneja el router de la app (ver app/Router.php) — no requiere ErrorDocument.
