@@ -1,0 +1,38 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=1440">
+<title>Horizonte toledano</title>
+<style>
+:root{--sky:#9ec3d6;--wheat:#c08a3e;--clay:#8e4a2b;--green:#558f6e;--ink:#1e2a2a}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;font-family:"Archivo","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--clay)}
+.sky{position:absolute;inset:0 0 360px 0;background:var(--sky)}
+.render{position:absolute;left:0;right:0;top:220px;height:420px;background:url(../../../img/hero-bargas.jpg) center 60%/cover}
+.horizon{position:absolute;left:0;right:0;top:540px;height:2px;background:#fff}
+nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:26px 56px}
+nav img{height:36px}nav ul{display:flex;gap:40px;list-style:none;font-weight:700;font-size:15px}
+nav .cta{background:var(--green);color:#fff;padding:13px 24px;font-weight:700}
+h1{position:absolute;left:56px;top:104px;font-size:96px;line-height:.92;font-weight:800;letter-spacing:-.03em;color:var(--ink);max-width:1100px}
+h1 em{font-style:normal;color:var(--green)}
+.earth{position:absolute;left:0;right:0;bottom:0;height:260px;background:var(--clay);color:#fff;display:grid;grid-template-columns:1.1fr repeat(3,.6fr) .9fr;align-items:end;padding:0 56px 48px;gap:0}
+.earth .name p{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#f3d2a4}
+.earth .name h2{font-size:34px;font-weight:800;margin-top:8px}
+.earth .n{border-left:2px solid #ffffff55;padding-left:22px}
+.earth .n b{display:block;font-size:72px;line-height:1;font-weight:800;color:#f3d2a4;font-variant-numeric:tabular-nums}
+.earth .n span{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.go{justify-self:end;display:flex;flex-direction:column;gap:12px}
+.go span{background:var(--green);color:#fff;padding:18px 30px;font-weight:800;font-size:17px;text-align:center}
+.go i{font-style:normal;border:2px solid #fff8;padding:16px 30px;font-weight:700;text-align:center}
+.light{position:absolute;right:56px;top:560px;display:flex;gap:10px;color:#fff;font-weight:700;font-size:12px;letter-spacing:.12em}
+.light s{text-decoration:none;opacity:.5}
+</style></head><body>
+<div class="sky"></div><div class="render"></div><div class="horizon"></div>
+<nav><img src="../../../img/logo.png" alt="Kaik Home"><ul><li>Promociones</li><li>Próximamente</li><li>Vender tu casa</li><li>Nosotros</li></ul><span class="cta">Reservar visita</span></nav>
+<h1>Tu casa, <em>en su horizonte</em>.</h1>
+<div class="light">AMANECER <s>· MEDIODÍA · ATARDECER</s></div>
+<div class="earth">
+ <div class="name"><p>Bargas, Toledo · Obra en curso</p><h2>Diana Residencial</h2></div>
+ <div class="n"><b>37</b><span>viviendas</span></div>
+ <div class="n"><b>3</b><span>dormitorios</span></div>
+ <div class="n"><b>2T27</b><span>entrega</span></div>
+ <div class="go"><span>Reservar visita</span><i>Descargar dossier</i></div>
+</div>
+</body></html>

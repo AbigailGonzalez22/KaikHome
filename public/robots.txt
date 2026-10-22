@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /config/
+Disallow: /lib/
+Disallow: /contact.php
+
+Sitemap: https://www.kaikhome.com/sitemap-index.xml

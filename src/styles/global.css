@@ -1,0 +1,483 @@
+@import '@fontsource-variable/plus-jakarta-sans';
+
+/* ==========================================================================
+   KAIK HOME — HOJA DE ESTILOS PRINCIPAL
+   Misma identidad que el sitio anterior (Figma oficial): verde de marca,
+   badges menta, tarjetas redondeadas y panel oscuro de contacto.
+   Organizado en: 1) Variables  2) Base  3) Componentes  4) Movimiento
+   Los estilos propios de cada bloque viven en su componente.
+   ========================================================================== */
+
+/* 1. VARIABLES DE MARCA ------------------------------------------------------ */
+:root {
+  --green-dark: #558f6e; /* color principal de marca: botones, links, acentos */
+  --green-dark-hover: #487a5e;
+  --green-ink: #3e7356; /* verde para texto pequeño sobre blanco (contraste AA) */
+  --green-btn: #487a5e; /* fondo de botones con texto blanco (contraste AA) */
+  --green-btn-hover: #3d6b51;
+  --green-mint: #9af7af; /* badges y labels sobre fondo oscuro */
+  --clay: #e2725b; /* estado "Obra en curso" */
+  --clay-btn: #b8513b; /* fondo con texto blanco (contraste AA) */
+  --ink: #1b1c1c;
+  --ink-soft: #3f4940;
+  --paper: #f5f3f3;
+  --paper-2: #efeded;
+  --paper-3: #f8f9f8;
+  --line: #becabd;
+  --dark: #2c3333;
+  --footer-bg: #25352c;
+
+  --radius-lg: 32px;
+  --radius-md: 20px;
+  --radius-pill: 9999px;
+  --shadow-soft: 0 20px 60px rgb(27 28 28 / 0.1);
+  --shadow-strong: 0 30px 80px rgb(27 28 28 / 0.22);
+  --container: 1180px;
+  --head-h: 84px;
+  --font-main: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 2. BASE -------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--head-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+  accent-color: var(--green-dark);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--ink);
+  background: #fff;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--green-mint);
+  color: var(--ink);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--green-dark);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 24px;
+  top: -60px;
+  z-index: 300;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--dark);
+  color: #fff;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.text-green {
+  color: var(--green-dark);
+}
+
+.section {
+  padding: clamp(56px, 4rem + 3vw, 104px) 0;
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 48px;
+}
+
+.section-head h2 {
+  font-size: clamp(26px, 1.2rem + 1.6vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.section-head p {
+  margin-top: 12px;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+
+/* 3. COMPONENTES -------------------------------------------------------------- */
+
+/* Badges tipo píldora: menta para destacar sobre blanco, cristal blanco sobre fotos */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px 7px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.badge svg {
+  flex-shrink: 0;
+}
+
+.badge-mint {
+  background: rgb(154 247 175 / 0.55);
+  color: #1d5236;
+  box-shadow: inset 0 0 0 1px rgb(29 82 54 / 0.14);
+}
+
+.badge-mint svg {
+  color: var(--green-ink);
+}
+
+.badge-white {
+  background: rgb(255 255 255 / 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+}
+
+.badge-white svg {
+  color: var(--green-ink);
+}
+
+.badge-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-clay {
+  background: var(--clay);
+  animation: pulse-clay 2.4s infinite;
+}
+
+.dot-green {
+  background: var(--green-dark);
+  animation: pulse-green 2.4s infinite;
+}
+
+@keyframes pulse-clay {
+  0% {
+    box-shadow: 0 0 0 0 rgb(226 114 91 / 0.6);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px rgb(226 114 91 / 0);
+  }
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgb(85 143 110 / 0.6);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px rgb(85 143 110 / 0);
+  }
+}
+
+/* Botones */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  border: 2px solid transparent;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    transform 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth),
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Barrido de brillo sutil al pasar el mouse */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.25) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.6s var(--ease-smooth);
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  transform: translateX(120%);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgb(27 28 28 / 0.15);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.btn svg {
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.btn:hover svg.arrow {
+  transform: translateX(3px);
+}
+
+.btn:hover svg.down {
+  transform: translateY(2px);
+}
+
+.btn-primary {
+  background: var(--green-btn);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--green-btn-hover);
+}
+
+.btn-clay {
+  background: var(--clay-btn);
+  color: #fff;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--green-dark);
+  color: var(--green-ink);
+}
+
+.btn-outline:hover {
+  background: var(--green-btn);
+  color: #fff;
+}
+
+.btn-ghost-white {
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.5);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-ghost-white:hover {
+  background: rgb(255 255 255 / 0.22);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Chips grises (tipologías) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Lista de checks verdes */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.check-list svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--green-dark);
+}
+
+/* Íconos en círculo */
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgb(154 247 175 / 0.18);
+  color: var(--green-dark);
+  flex-shrink: 0;
+}
+
+/* 4. MOVIMIENTO ---------------------------------------------------------------- */
+/* .reveal aparece con fade + desplazamiento sutil al entrar en pantalla.
+   Solo se oculta cuando el JS está activo (html.js), así nunca queda contenido invisible. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s var(--ease-smooth),
+    transform 0.8s var(--ease-smooth);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Lenis (scroll suave) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+
+  @view-transition {
+    navigation: none;
+  }
+}

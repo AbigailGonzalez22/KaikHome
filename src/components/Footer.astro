@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import logo from '../assets/img/logo-footer.png';
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const promociones = (await getCollection('promociones')).sort((a, b) => a.data.orden - b.data.orden);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <Image class="footer-logo" src={logo} alt="Kaik Home" width={130} height={35} />
+        <p>Promotora inmobiliaria en Toledo. Promovemos y construimos viviendas de obra nueva.</p>
+        <div class="footer-social">
+          <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook de Kaik Home">
+            <Icon name="facebook" size={18} />
+          </a>
+          <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram de Kaik Home">
+            <Icon name="instagram" size={18} />
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h2>Explorar</h2>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/#quienes-somos">Nosotros</a></li>
+          <li><a href="/#proximamente">Próximamente</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Promociones</h2>
+        <ul>
+          {
+            promociones.map((p) => (
+              <li>
+                <a href={`/${p.id}`}>{p.data.localidad}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Oficina</h2>
+        <ul>
+          <li>{site.address.street}, {site.address.locality}, {site.address.postalCode}</li>
+          <li><a href={site.phoneHref}>{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© {year} Kaik Home Toledo. Avanzamos contigo.</span>
+      <div class="footer-legal-links">
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--footer-bg);
+    color: rgb(255 255 255 / 0.8);
+    padding: 72px 0 0;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 40px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .footer-col h2 {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14px;
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .footer-col a {
+    font-size: 14px;
+    color: rgb(255 255 255 / 0.7);
+    transition: color 0.15s ease;
+  }
+
+  .footer-col a:hover {
+    color: var(--green-mint);
+  }
+
+  .footer-brand :global(.footer-logo) {
+    height: 30px;
+    width: auto;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: rgb(255 255 255 / 0.65);
+    margin-bottom: 18px;
+    max-width: 30ch;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 10px;
+  }
+
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s var(--ease-smooth);
+  }
+
+  .footer-social a:hover {
+    background: var(--green-mint);
+    border-color: var(--green-mint);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .footer-legal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    font-size: 13px;
+    color: rgb(255 255 255 / 0.6);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-legal-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-legal-links a:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-legal {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

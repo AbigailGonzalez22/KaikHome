@@ -1,0 +1,2 @@
+# Solo PHP interno: nada de esta carpeta se sirve por HTTP.
+Require all denied

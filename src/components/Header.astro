@@ -1,0 +1,626 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import logo from '../assets/img/logo.png';
+import Icon from './Icon.astro';
+import Img from './Img.astro';
+import { site } from '../data/site';
+
+interface Props {
+  /** 'home' or a development slug ('bargas', 'mentrida') */
+  active?: string;
+}
+const { active = 'home' } = Astro.props;
+const promociones = (await getCollection('promociones')).sort((a, b) => a.data.orden - b.data.orden);
+const isPromo = promociones.some((p) => p.id === active);
+const current = (key: string) => (active === key ? 'page' : undefined);
+---
+
+<header class="site-header" data-header>
+  <div class="container head-row">
+    <a href="/" class="logo" aria-label="Kaik Home, inicio">
+      <Image class="logo-img" src={logo} alt="Kaik Home" width={150} height={40} loading="eager" />
+    </a>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="/" aria-current={current('home')} data-spy-home={active === 'home' ? '' : undefined}>Inicio</a>
+      <div class="nav-dropdown" data-dropdown>
+        <button
+          type="button"
+          class:list={['nav-dropdown-toggle', { 'is-active': isPromo }]}
+          aria-expanded="false"
+          aria-controls="promociones-menu"
+        >
+          Promociones <Icon name="chevron" size={16} />
+        </button>
+        <div class="nav-dropdown-menu" id="promociones-menu">
+          {
+            promociones.map((p) => (
+              <a href={`/${p.id}`} aria-current={current(p.id)} class="menu-promo">
+                <span class="menu-thumb">
+                  <Img src={p.data.portada} alt="" widths={[120]} sizes="56px" />
+                </span>
+                <span>
+                  <strong>{p.data.localidad}</strong>
+                  <small>
+                    {p.data.viviendas} viviendas · Entrega {p.data.entrega}
+                  </small>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <a href="/#proximamente" data-spy="proximamente">Próximamente</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="social-icons">
+        <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook de Kaik Home">
+          <Icon name="facebook" size={20} />
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram de Kaik Home">
+          <Icon name="instagram" size={20} />
+        </a>
+      </div>
+      <a href="#contacto" class="btn btn-primary head-cta">Contactar</a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil" data-menu-toggle>
+        <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="menu-movil" aria-label="Navegación móvil" hidden data-menu>
+    <div class="mobile-links">
+      <a href="/" aria-current={current('home')}>Inicio</a>
+      <p class="mobile-group">Promociones</p>
+      {
+        promociones.map((p) => (
+          <a href={`/${p.id}`} aria-current={current(p.id)} class="mobile-promo">
+            <span>{p.data.localidad}</span>
+            <small>
+              {p.data.viviendas} viviendas · {p.data.estado}
+            </small>
+          </a>
+        ))
+      }
+      <a href="/#proximamente">Próximamente</a>
+      <a href="/#quienes-somos">Nosotros</a>
+    </div>
+    <div class="mobile-foot">
+      <div class="mobile-actions">
+        <a href="#contacto" class="btn btn-primary">Contactar</a>
+        <a href={site.phoneHref} class="btn btn-outline"><Icon name="phone" size={18} /> Llamar</a>
+      </div>
+      <div class="social-icons">
+        <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook de Kaik Home">
+          <Icon name="facebook" size={22} />
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram de Kaik Home">
+          <Icon name="instagram" size={22} />
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgb(255 255 255 / 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(27 28 28 / 0.06);
+    transition:
+      box-shadow 0.3s var(--ease-smooth),
+      background-color 0.3s var(--ease-smooth);
+    view-transition-name: site-header;
+  }
+
+  .site-header.is-scrolled {
+    background: rgb(255 255 255 / 0.94);
+    box-shadow: 0 8px 30px rgb(27 28 28 / 0.08);
+  }
+
+  .head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: var(--head-h);
+    transition: height 0.3s var(--ease-smooth);
+  }
+
+  .is-scrolled .head-row {
+    height: 68px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo :global(.logo-img) {
+    height: 36px;
+    width: auto;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .main-nav > a,
+  .nav-dropdown-toggle {
+    position: relative;
+    padding: 8px 0;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+  }
+
+  .main-nav > a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--green-dark);
+    transform: scaleX(0);
+    transition: transform 0.3s var(--ease-smooth);
+  }
+
+  .main-nav > a:hover,
+  .main-nav > a.is-current {
+    color: var(--green-ink);
+  }
+
+  .main-nav > a:hover::after,
+  .main-nav > a.is-current::after {
+    transform: scaleX(1);
+  }
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+  }
+
+  .nav-dropdown-toggle :global(svg) {
+    transition: transform 0.2s var(--ease-smooth);
+  }
+
+  .nav-dropdown-toggle.is-active,
+  .nav-dropdown-toggle:hover,
+  .nav-dropdown.is-open .nav-dropdown-toggle {
+    color: var(--green-ink);
+  }
+
+  .nav-dropdown.is-open .nav-dropdown-toggle :global(svg),
+  .nav-dropdown:hover .nav-dropdown-toggle :global(svg) {
+    transform: rotate(180deg);
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    width: 290px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow-strong);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s var(--ease-smooth),
+      transform 0.2s var(--ease-smooth),
+      visibility 0.2s;
+  }
+
+  /* Invisible bridge so the menu stays open while the pointer travels to it. */
+  .nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -18px;
+    height: 18px;
+  }
+
+  .menu-promo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 14px;
+    transition: background-color 0.15s ease;
+  }
+
+  .menu-thumb {
+    flex-shrink: 0;
+    width: 56px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+
+  .menu-thumb :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .menu-promo strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .menu-promo small {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .menu-promo:hover,
+  .menu-promo[aria-current='page'] {
+    background: var(--paper-2);
+  }
+
+  .menu-promo:hover strong,
+  .menu-promo[aria-current='page'] strong {
+    color: var(--green-ink);
+  }
+
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown.is-open .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .social-icons a {
+    display: inline-flex;
+    color: var(--green-dark);
+    transition:
+      color 0.15s ease,
+      transform 0.2s var(--ease-smooth);
+  }
+
+  .social-icons a:hover {
+    color: var(--green-dark-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Burger that morphs into a cross. */
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -8px;
+    background: none;
+    border: none;
+    border-radius: 12px;
+    color: var(--ink);
+  }
+
+  .burger {
+    position: relative;
+    width: 22px;
+    height: 16px;
+  }
+
+  .burger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition:
+      transform 0.35s var(--ease-smooth),
+      opacity 0.2s ease,
+      top 0.35s var(--ease-smooth);
+  }
+
+  .burger span:nth-child(1) {
+    top: 0;
+  }
+
+  .burger span:nth-child(2) {
+    top: 7px;
+  }
+
+  .burger span:nth-child(3) {
+    top: 14px;
+  }
+
+  .menu-toggle[aria-expanded='true'] .burger span:nth-child(1) {
+    top: 7px;
+    transform: rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded='true'] .burger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded='true'] .burger span:nth-child(3) {
+    top: 7px;
+    transform: rotate(-45deg);
+  }
+
+  /* Mobile menu: full screen under the header. */
+  .mobile-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--menu-top, var(--head-h));
+    height: calc(100dvh - var(--menu-top, var(--head-h)));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #fff;
+    border-top: 1px solid rgb(27 28 28 / 0.08);
+    padding: 12px 24px calc(24px + env(safe-area-inset-bottom));
+    animation: menu-in 0.35s var(--ease-smooth);
+  }
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  .mobile-links > a {
+    display: block;
+    padding: 16px 4px;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--ink);
+    border-bottom: 1px solid rgb(27 28 28 / 0.07);
+    animation: link-in 0.45s var(--ease-smooth) both;
+  }
+
+  .mobile-links > :nth-child(2) {
+    animation-delay: 40ms;
+  }
+
+  .mobile-links > :nth-child(3) {
+    animation-delay: 80ms;
+  }
+
+  .mobile-links > :nth-child(4) {
+    animation-delay: 120ms;
+  }
+
+  .mobile-links > :nth-child(5) {
+    animation-delay: 160ms;
+  }
+
+  .mobile-links > :nth-child(6) {
+    animation-delay: 200ms;
+  }
+
+  @keyframes link-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .mobile-links > a[aria-current='page'] {
+    color: var(--green-ink);
+  }
+
+  .mobile-group {
+    padding: 18px 4px 2px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .mobile-links > a.mobile-promo {
+    padding-left: 16px;
+  }
+
+  .mobile-promo span {
+    display: block;
+  }
+
+  .mobile-promo small {
+    display: block;
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  .mobile-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .mobile-foot .social-icons {
+    justify-content: center;
+  }
+
+  @media (max-width: 900px) {
+    .main-nav,
+    .header-actions > .social-icons {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .head-row {
+      height: 68px;
+    }
+
+    .is-scrolled .head-row {
+      height: 60px;
+    }
+
+    .logo :global(.logo-img) {
+      height: 32px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .head-cta {
+      display: none;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .mobile-nav {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const dropdown = document.querySelector<HTMLElement>('[data-dropdown]');
+
+  let menuOpen = false;
+
+  // Scroll behavior: the header stays fixed and turns compact with a soft shadow after a little scroll.
+  let ticking = false;
+  const onScroll = () => {
+    ticking = false;
+    header.classList.toggle('is-scrolled', scrollY > 24);
+  };
+  addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(onScroll);
+      }
+    },
+    { passive: true },
+  );
+  onScroll();
+
+  // Mobile menu.
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      menuOpen = open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      if (open) {
+        menu.style.setProperty('--menu-top', `${header.getBoundingClientRect().bottom}px`);
+      }
+      menu.hidden = !open;
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+      document.dispatchEvent(new CustomEvent(open ? 'kaik:lock' : 'kaik:unlock'));
+    };
+    toggle.addEventListener('click', () => setOpen(!menuOpen));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    matchMedia('(min-width: 901px)').addEventListener('change', (e) => e.matches && menuOpen && setOpen(false));
+  }
+
+  // Promotions dropdown: hover (CSS), click and keyboard.
+  if (dropdown) {
+    const button = dropdown.querySelector<HTMLButtonElement>('button')!;
+    const setOpen = (open: boolean) => {
+      dropdown.classList.toggle('is-open', open);
+      button.setAttribute('aria-expanded', String(open));
+    };
+    button.addEventListener('click', () => setOpen(!dropdown.classList.contains('is-open')));
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target as Node)) setOpen(false);
+    });
+    dropdown.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        button.focus();
+      }
+    });
+    dropdown.addEventListener('focusout', (e) => {
+      if (!dropdown.contains(e.relatedTarget as Node)) setOpen(false);
+    });
+  }
+
+  // Scroll spy on the home page: highlight "Próximamente" while that section is in view,
+  // otherwise "Inicio". On other pages the current page link stays highlighted.
+  const home = document.querySelector<HTMLElement>('[data-spy-home]');
+  const spyLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-spy]'));
+  document.querySelector('.main-nav a[aria-current="page"]')?.classList.add('is-current');
+  if (home && spyLinks.length && 'IntersectionObserver' in window) {
+    const visible = new Set<string>();
+    const update = () => {
+      let active: HTMLElement = home;
+      spyLinks.forEach((link) => {
+        if (visible.has(link.dataset.spy!)) active = link;
+      });
+      [home, ...spyLinks].forEach((l) => l.classList.toggle('is-current', l === active));
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id)));
+        update();
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+    spyLinks.forEach((link) => {
+      const section = document.getElementById(link.dataset.spy!);
+      if (section) io.observe(section);
+    });
+  }
+</script>

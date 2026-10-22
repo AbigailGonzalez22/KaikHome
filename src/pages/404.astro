@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Base title="Página no encontrada | Kaik Home" description="La página que buscas no existe o ha cambiado de dirección." noindex>
+  <section class="section">
+    <div class="container nf">
+      <span class="badge badge-mint">Error 404</span>
+      <h1>Esta página no existe</h1>
+      <p>Puede que la dirección haya cambiado. Desde aquí puedes volver a las promociones o escribirnos.</p>
+      <div class="nf-actions">
+        <a class="btn btn-primary" href="/#promociones">Ver promociones <Icon name="arrow" size={18} /></a>
+        <a class="btn btn-outline" href="/#contacto">Contactar</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    min-height: 50svh;
+    justify-content: center;
+  }
+
+  .nf h1 {
+    font-size: clamp(32px, 1.6rem + 2.4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .nf p {
+    max-width: 46ch;
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+
+  .nf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>

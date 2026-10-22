@@ -1,0 +1,241 @@
+{
+ "title": "Elige el mundo visual de Kaik Home",
+ "question": "Nueva tirada: salió «Horizonte toledano». Quédatela, elige otra o vuelve a tirar.",
+ "options": [
+  {
+   "id": "assigned-r1",
+   "kind": "assigned",
+   "label": "Horizonte toledano",
+   "kicker": "THE ROLL",
+   "lineage": "El paisaje de La Sagra y Torrijos: cereal, encinas, tierra roja y cielo ancho",
+   "thesis": "Cada casa en su horizonte: una línea de horizonte ordena todo el sitio, cielo arriba, tierra abajo y la casa en medio.",
+   "palette": [
+    "#9ec3d6",
+    "#c08a3e",
+    "#8e4a2b",
+    "#558f6e",
+    "#1e2a2a"
+   ],
+   "materials": [
+    "campos de cereal",
+    "tierra roja",
+    "render a sangre bajo cielo abierto"
+   ],
+   "viewport": "Render panorámico partido por una línea de horizonte fina; arriba, en el cielo, el titular; abajo, en la franja de tierra, la ficha real y «Reservar visita». Cada banner cambia como una luz del día distinta.",
+   "risk": "Puede leerse turístico si el paisaje le gana a la casa o si la paleta se apaga en beige.",
+   "raised": [
+    {
+     "from": "challenger-ikeda",
+     "raise": "Ficha técnica en columnas tabulares de cifras alineadas: m², dormitorios, baños y patios se leen como datos, no como adjetivos."
+    },
+    {
+     "from": "challenger-tensegrity",
+     "raise": "Los planos llevan cotas y anotaciones ancladas a cada estancia con líneas guía, en lugar de un lightbox mudo."
+    },
+    {
+     "from": "challenger-greiman",
+     "raise": "La escala salta sin miedo de la nota al titular gigante: una cifra o una frase domina cada sección."
+    },
+    {
+     "from": "challenger-lowicz",
+     "raise": "Profundidad solo por planos superpuestos de color plano: sin sombras difusas ni cristal."
+    },
+    {
+     "from": "challenger-teletext",
+     "raise": "Cada promoción y cada tipología tiene su dirección propia y enlazable."
+    }
+   ],
+   "html": ".impeccable/mocks/decision/assigned-r1.html"
+  },
+  {
+   "id": "pick-r1",
+   "kind": "pick",
+   "label": "Monografía de arquitectura",
+   "kicker": "IMPECCABLE’S PICK",
+   "lineage": "Monografías de arquitectura españolas: láminas a sangre, planos acotados, rejilla estricta",
+   "thesis": "Cada promoción se publica como una monografía: render a lámina completa, planos acotados y ficha técnica en rejilla.",
+   "palette": [
+    "#f2f2ef",
+    "#141615",
+    "#558f6e",
+    "#8d918c"
+   ],
+   "materials": [
+    "papel estucado mate",
+    "línea de plano",
+    "lámina a sangre"
+   ],
+   "viewport": "Lámina a sangre del render a dos tercios; a la derecha, una columna estrecha con nombre, ficha acotada y «Reservar visita»; el plano se dibuja línea a línea al hacer scroll.",
+   "risk": "Es la dirección a la que llegan muchas webs de arquitectura: elegante, pero puede sentirse fría o de estudio y no de familia.",
+   "html": ".impeccable/mocks/decision/pick-r1.html"
+  },
+  {
+   "id": "challenger-ikeda",
+   "kind": "challenger",
+   "catalogId": "ikeda-datamatics",
+   "label": "Datamática",
+   "verdict": "declined",
+   "lineage": "Instalaciones de datos en blanco y negro",
+   "thesis": "Un muro de barras y cifras que parpadea.",
+   "palette": [
+    "#000000",
+    "#ffffff"
+   ],
+   "materials": [
+    "código de barras",
+    "monoespaciada"
+   ],
+   "viewport": "Campo de barras con la ficha en columnas.",
+   "case": "Frío y estroboscópico: no se ve la casa ni se siente hogar.",
+   "risk": "Agresivo para familias.",
+   "kept": "Densidad de datos tabular y precisa.",
+   "hero": "https://impeccable.style/worlds/cards/ikeda-datamatics-hero.webp"
+  },
+  {
+   "id": "challenger-teletext",
+   "kind": "challenger",
+   "catalogId": "broadcast-programming-teletext-service",
+   "label": "Teletexto",
+   "verdict": "declined",
+   "lineage": "Teletexto de televisión",
+   "thesis": "Páginas de tres cifras sobre negro.",
+   "palette": [
+    "#000000",
+    "#ffff00",
+    "#00ffff",
+    "#ffffff"
+   ],
+   "materials": [
+    "mosaico de bloques",
+    "rejilla 40×24"
+   ],
+   "viewport": "Página 100 con las promociones numeradas.",
+   "case": "Retro-novedad: choca con «nada poco serio».",
+   "risk": "Juego nostálgico.",
+   "kept": "Direcciones directas y enlazables por página.",
+   "hero": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service-hero.webp"
+  },
+  {
+   "id": "challenger-tensegrity",
+   "kind": "challenger",
+   "catalogId": "kinetic-sculpture-automata-tensegrity-breathing-column",
+   "label": "Tensegridad",
+   "verdict": "declined",
+   "lineage": "Esculturas de tensegridad",
+   "thesis": "Fuerzas opuestas que sostienen el cuerpo.",
+   "palette": [
+    "#1a1a1a",
+    "#d9d6d0",
+    "#c2271f"
+   ],
+   "materials": [
+    "varilla de carbono",
+    "cuerda roja"
+   ],
+   "viewport": "Columna que respira con valores de fuerza.",
+   "case": "Abstracto: el comprador no ve su casa ni su ruta.",
+   "risk": "Ingeniería sin hogar.",
+   "kept": "Anotaciones ancladas a nodos con líneas guía.",
+   "hero": "https://impeccable.style/worlds/cards/kinetic-sculpture-automata-tensegrity-breathing-column-hero.webp"
+  },
+  {
+   "id": "challenger-lowicz",
+   "kind": "challenger",
+   "catalogId": "craft-making-lowicz-layered-papercut",
+   "label": "Recortable de Łowicz",
+   "verdict": "declined",
+   "lineage": "Recortables de papel de Łowicz",
+   "thesis": "Profundidad por capas de color sin sombra.",
+   "palette": [
+    "#d7263d",
+    "#1b998b",
+    "#f5d547",
+    "#ffffff"
+   ],
+   "materials": [
+    "papel recortado",
+    "capas planas"
+   ],
+   "viewport": "Rosetón simétrico por capas.",
+   "case": "Folclore ajeno a Toledo y poco serio.",
+   "risk": "Decorativo y lejano.",
+   "kept": "Profundidad solo por superposición plana.",
+   "hero": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut-hero.webp"
+  },
+  {
+   "id": "challenger-matchbook",
+   "kind": "challenger",
+   "catalogId": "vernacular-ephemera-matchbook-drawer",
+   "label": "Cajón de cerillas",
+   "verdict": "declined",
+   "lineage": "Cajas de cerillas de hoteles y clubes",
+   "thesis": "Cada sitio guardado en una portada de bolsillo.",
+   "palette": [
+    "#5c1a1b",
+    "#1f4d3a",
+    "#c9a44c",
+    "#111111"
+   ],
+   "materials": [
+    "dorado en caliente",
+    "cartón"
+   ],
+   "viewport": "Portadas que se abren en abanico.",
+   "case": "Nocturno y nostálgico: no cuadra con familias ni con obra nueva.",
+   "risk": "Lujo de club, no hogar.",
+   "kept": "Una portada propia por promoción.",
+   "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-matchbook-drawer-hero.webp"
+  },
+  {
+   "id": "challenger-greiman",
+   "kind": "challenger",
+   "catalogId": "digital-design-canon-greiman-hybrid-collage",
+   "label": "Collage híbrido",
+   "verdict": "declined",
+   "lineage": "Carteles de April Greiman",
+   "thesis": "Capas de píxel y tipografía en rampa.",
+   "palette": [
+    "#1aa5a5",
+    "#e0218a",
+    "#f4f2ee"
+   ],
+   "materials": [
+    "tramado de píxel",
+    "vídeo"
+   ],
+   "viewport": "Collage profundo de capas inclinadas.",
+   "case": "Experimental: pierde claridad y seriedad.",
+   "risk": "Confuso para una compra.",
+   "kept": "Saltos de escala de nota a cartel.",
+   "hero": "https://impeccable.style/worlds/cards/digital-design-canon-greiman-hybrid-collage-hero.webp"
+  }
+ ],
+ "reroll": {
+  "registers": [
+   "safer",
+   "bolder"
+  ]
+ },
+ "buildPath": {
+  "value": "code"
+ },
+ "canon": true,
+ "canonCard": {
+  "kind": "canon",
+  "label": "El estándar del sector",
+  "thesis": "Lo que publica cualquier promotora premium, ejecutado impecable.",
+  "palette": [
+   "#ffffff",
+   "#1b1c1c",
+   "#558f6e"
+  ],
+  "materials": [
+   "rejilla limpia",
+   "render a sangre"
+  ],
+  "viewport": "Render a pantalla completa, titular centrado y una fila de tarjetas de promociones.",
+  "risk": "Indistinguible de la competencia, por diseño.",
+  "html": ".impeccable/mocks/decision/canon-r1.html"
+ },
+ "steer": true
+}

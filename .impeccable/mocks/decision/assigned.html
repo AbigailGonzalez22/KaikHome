@@ -1,0 +1,49 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=1440">
+<title>Ladrillo y encina</title>
+<style>
+:root{--brick:#9c4426;--brick-d:#5e2414;--green:#558f6e;--cal:#e9ece7;--ink:#1c201d;--mortar:#c9c3ba}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;font-family:"Archivo","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--cal)}
+.hero{position:relative;height:900px;display:grid;grid-template-rows:1fr auto}
+.photo{position:absolute;inset:0 0 300px 0;background:url(../../../img/hero-bargas.jpg) center 40%/cover}
+nav{position:relative;display:flex;align-items:center;justify-content:space-between;padding:28px 56px;background:linear-gradient(#0008,#0000)}
+nav img{height:38px;filter:brightness(0) invert(1)}
+nav ul{display:flex;gap:40px;list-style:none;padding:0;color:#fff;font-size:15px;font-weight:600;letter-spacing:.02em}
+nav a.cta{background:var(--green);color:#fff;padding:14px 26px;font-weight:700;font-size:15px;text-decoration:none}
+/* the brick band: courses of brick drawn with repeating gradients */
+.wall{position:relative;align-self:end;height:340px;background:
+ repeating-linear-gradient(0deg,var(--mortar) 0 3px,transparent 3px 34px),
+ var(--brick);display:grid;grid-template-columns:1.25fr 1fr;}
+.wall::before{content:"";position:absolute;inset:0;background:
+ repeating-linear-gradient(90deg,var(--mortar) 0 3px,transparent 3px 120px);
+ -webkit-mask:repeating-linear-gradient(0deg,#000 0 34px,transparent 34px 68px);mix-blend-mode:normal;opacity:.9}
+.wall::after{content:"";position:absolute;inset:0;background:
+ repeating-linear-gradient(90deg,var(--mortar) 0 3px,transparent 3px 120px) 60px 0;
+ -webkit-mask:repeating-linear-gradient(0deg,transparent 0 34px,#000 34px 68px);opacity:.9}
+.slab{position:relative;z-index:2;background:var(--brick-d);color:#fff;padding:44px 56px;margin:-120px 0 0 56px;display:flex;flex-direction:column;gap:18px}
+.kick{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#f0c9b8;font-weight:700}
+h1{font-size:68px;line-height:.98;font-weight:800;letter-spacing:-.02em;max-width:760px}
+.row{display:flex;gap:16px;align-items:center;margin-top:8px}
+.btn{background:var(--green);color:#fff;padding:18px 30px;font-weight:700;font-size:17px}
+.ghost{border:2px solid #fff6;color:#fff;padding:16px 28px;font-weight:700;font-size:17px}
+.facts{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);align-self:end;margin:0 56px 44px 40px;background:var(--cal)}
+.facts div{padding:22px 24px;border-right:3px solid var(--mortar)}
+.facts div:last-child{border:0}
+.facts b{display:block;font-size:64px;line-height:1;font-weight:800;color:var(--brick)}
+.facts span{font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.courses{position:absolute;left:56px;bottom:14px;z-index:3;display:flex;gap:6px;color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em}
+.courses i{width:46px;height:8px;background:#fff4}.courses i.on{background:#fff}
+</style></head><body>
+<section class="hero">
+ <div class="photo"></div>
+ <nav><img src="../../../img/logo.png" alt="Kaik Home"><ul><li>Promociones</li><li>Próximamente</li><li>Vender tu casa</li><li>Nosotros</li></ul><a class="cta">Reservar visita</a></nav>
+ <div class="wall">
+  <div class="slab">
+   <p class="kick">Diana Residencial · Bargas, Toledo · Obra en curso</p>
+   <h1>Tu casa en Bargas, promovida y construida por las mismas manos.</h1>
+   <div class="row"><span class="btn">Reservar visita</span><span class="ghost">Descargar dossier</span></div>
+  </div>
+  <div class="facts"><div><b>37</b><span>viviendas</span></div><div><b>103–114</b><span>m² construidos</span></div><div><b>2T 27</b><span>entrega</span></div></div>
+  <div class="courses"><i class="on"></i><i></i><i></i> 01 / 03</div>
+ </div>
+</section></body></html>

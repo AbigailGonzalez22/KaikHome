@@ -1,0 +1,73 @@
+{
+  "orden": 1,
+  "nombre": "Vista Residencial Méntrida",
+  "localidad": "Méntrida",
+  "estado": "En ejecución",
+  "estadoColor": "green",
+  "viviendas": 24,
+  "plantas": "2 plantas",
+  "obraEjecutada": 60,
+  "entrega": "1T 2027",
+  "stats": [
+    {
+      "icono": "viviendas",
+      "texto": "24 viviendas"
+    },
+    {
+      "icono": "ubicacion",
+      "texto": "Méntrida, Toledo"
+    },
+    {
+      "icono": "obra",
+      "texto": "60% obra ejecutada"
+    },
+    {
+      "icono": "entrega",
+      "texto": "Entrega 1T 2027"
+    }
+  ],
+  "titular": "tu próximo hogar ya en construcción",
+  "descripcion": "Un desarrollo exclusivo que redefine la vida moderna en la comarca de Torrijos, con calidades premium y eficiencia energética superior.",
+  "resumen": "Descubre la exclusividad en un entorno natural único.",
+  "dossier": "/pdf/residencial-mentrida-dossier.pdf",
+  "hero": "../../assets/img/hero-mentrida.jpg",
+  "heroAlt": "Viviendas de Vista Residencial Méntrida, fachadas de ladrillo con balcones",
+  "portada": "../../assets/img/card-mentrida.jpg",
+  "portadaAlt": "Calle de Vista Residencial Méntrida con las viviendas adosadas",
+  "contacto": {
+    "titulo": "Reserva tu visita a Vista Residencial",
+    "texto": "Visita la obra con nuestros técnicos y descubre la precisión y el cuidado que ponemos en cada detalle de tu futura casa."
+  },
+  "tipologias": [
+    {
+      "id": "dos-plantas",
+      "nombre": "Vivienda de dos plantas",
+      "imagen": "../../assets/img/mentrida-tipo1.jpg",
+      "imagenAlt": "Vivienda de dos plantas en Vista Residencial Méntrida",
+      "construidos": 204,
+      "patios": 35,
+      "dormitorios": 3,
+      "banos": 3,
+      "rasgos": [
+        "204 m² distribuidos en dos plantas.",
+        "Patios de 35 m² para disfrutar al aire libre."
+      ],
+      "planos": [
+        {
+          "imagen": "../../assets/img/mentrida-tipo1-planos-1.jpg",
+          "alt": "Plano 1 de la vivienda de dos plantas en Vista Residencial Méntrida"
+        },
+        {
+          "imagen": "../../assets/img/mentrida-tipo1-planos-2.jpg",
+          "alt": "Plano 2 de la vivienda de dos plantas en Vista Residencial Méntrida"
+        }
+      ]
+    }
+  ],
+  "seo": {
+    "title": "Vista Residencial Méntrida: 24 viviendas obra nueva | Kaik Home",
+    "description": "Vista Residencial Méntrida: 24 viviendas de obra nueva de dos plantas en Méntrida (Toledo). 60% de obra ejecutada y entrega 1T 2027. Reserva tu visita.",
+    "ogTitle": "Vista Residencial Méntrida | Kaik Home",
+    "ogDescription": "24 viviendas en construcción en Méntrida, Toledo. Entrega 1T 2027."
+  }
+}

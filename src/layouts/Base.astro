@@ -1,0 +1,98 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import fontUrl from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  active?: string;
+  /** Keep the page out of search results (404). */
+  noindex?: boolean;
+}
+
+const { title, description, ogTitle = title, ogDescription = description, ogImage, jsonLd, active, noindex = false } =
+  Astro.props;
+// Clean URLs: /index.html -> /, /bargas.html -> /bargas (the server serves both, only the clean one is canonical).
+const cleanPath = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/') || '/';
+const canonical = new URL(cleanPath, site.url).href;
+const image = ogImage ? new URL(ogImage, site.url).href : undefined;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    {image && <meta property="og:image" content={image} />}
+    {image && <meta property="og:image:width" content="1200" />}
+    {image && <meta property="og:image:height" content="630" />}
+    {image && <meta property="og:image:alt" content={ogTitle} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kaik Home" />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    {image && <meta name="twitter:image" content={image} />}
+
+    <!-- Marks JS as available so reveal animations may start hidden. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    <!-- Google Tag Manager: loaded right after the page finishes loading so it never competes with the first paint. -->
+    <script is:inline define:vars={{ gtm: site.gtm }}>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      function loadGtm() {
+        var j = document.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + gtm;
+        document.head.appendChild(j);
+      }
+      if (document.readyState === 'complete') loadGtm();
+      else window.addEventListener('load', loadGtm, { once: true });
+    </script>
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${site.gtm}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"></iframe></noscript
+    >
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header active={active} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+    <slot name="after" />
+    <script>
+      import '../scripts/motion';
+    </script>
+  </body>
+</html>

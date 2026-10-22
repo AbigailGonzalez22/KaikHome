@@ -1,5 +1,6 @@
-# Sube al servidor (por FTP) solo los archivos que cambiaron desde el ultimo deploy.
+# Compila el sitio (npm run build) y sube al servidor (por FTP) solo los archivos de dist/ que cambiaron.
 # Uso: desde la raiz del proyecto, ejecutar:  .\deploy\deploy.ps1
+# Alternativa automatica: cada push a main despliega con GitHub Actions (.github/workflows/deploy.yml).
 # La primera vez: copiar .env.example a .env (en la raiz del proyecto) y completar
 # los datos reales del FTP. .env esta en .gitignore, nunca se sube a git.
 
@@ -43,11 +44,22 @@ if (-not $winscp) {
     exit 1
 }
 
-# Archivos/carpetas que nunca se suben (secretos, git, y config que difiere entre local y produccion)
-$exclude = ".git/;.gitignore;.env;.env.example;deploy/;config/config.php;README.md"
+Write-Host "Compilando el sitio..." -ForegroundColor Cyan
+Push-Location $root
+try {
+    npm run build
+    if ($LASTEXITCODE -ne 0) { Write-Host "La compilacion fallo." -ForegroundColor Red; exit 1 }
+} finally {
+    Pop-Location
+}
+
+$dist = Join-Path $root "dist"
+
+# Nunca se pisan las credenciales SMTP que viven solo en el servidor
+$exclude = "config/config.php"
 
 $openCmd = "open ftp://$($ftpUser):$($ftpPass)@$($ftpHost):$($ftpPort)/ -passive=on"
-$syncCmd = "synchronize remote -criteria=either -filemask=`"| $exclude`" `"$root`" `"$remotePath`""
+$syncCmd = "synchronize remote -criteria=either -filemask=`"| $exclude`" `"$dist`" `"$remotePath`""
 
 # Se arma un archivo de script para WinSCP en vez de pasar todo por linea de comandos:
 # evita que PowerShell rompa el quoting anidado al invocar el .exe nativo.

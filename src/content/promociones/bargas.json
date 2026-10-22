@@ -1,0 +1,88 @@
+{
+  "orden": 2,
+  "nombre": "Diana Residencial",
+  "localidad": "Bargas",
+  "estado": "Obra en curso",
+  "estadoColor": "clay",
+  "viviendas": 37,
+  "plantas": "1 y 2 plantas",
+  "entrega": "2T 2027",
+  "stats": [
+    {
+      "icono": "plantas",
+      "texto": "1 y 2 plantas"
+    },
+    {
+      "icono": "ubicacion",
+      "texto": "Bargas, Toledo"
+    },
+    {
+      "icono": "obra",
+      "texto": "Obra nueva"
+    },
+    {
+      "icono": "entrega",
+      "texto": "Entrega 2T 2027"
+    }
+  ],
+  "titular": "tu próximo hogar en Bargas",
+  "descripcion": "Un proyecto diseñado para el confort familiar, combinando arquitectura moderna con la tranquilidad de un entorno natural privilegiado en Toledo.",
+  "resumen": "Viviendas de diseño a un paso de la capital.",
+  "dossier": "/pdf/diana-residencial-dossier.pdf",
+  "hero": "../../assets/img/hero-bargas.jpg",
+  "heroAlt": "Render aéreo de Diana Residencial en Bargas, viviendas blancas con terrazas",
+  "portada": "../../assets/img/card-bargas.jpg",
+  "portadaAlt": "Render de Diana Residencial, promoción de obra nueva en Bargas",
+  "contacto": {
+    "titulo": "Reserva tu visita a Diana Residencial",
+    "texto": "Visita la obra con nuestros técnicos y descubre la precisión y el cuidado que ponemos en cada detalle de tu futura casa."
+  },
+  "tipologias": [
+    {
+      "id": "una-planta",
+      "nombre": "Vivienda de una planta",
+      "imagen": "../../assets/img/bargas-tipo1.jpg",
+      "imagenAlt": "Render de la vivienda de una planta en Diana Residencial, Bargas",
+      "construidos": 103,
+      "patios": 47,
+      "dormitorios": 3,
+      "banos": 2,
+      "rasgos": [
+        "Distribuida en planta baja para mayor accesibilidad.",
+        "Dormitorio principal con baño en suite."
+      ],
+      "planos": [
+        {
+          "imagen": "../../assets/img/bargas-tipo1-planos.jpg",
+          "alt": "Plano de la vivienda de una planta en Diana Residencial, Bargas"
+        }
+      ]
+    },
+    {
+      "id": "dos-plantas",
+      "nombre": "Vivienda de dos plantas",
+      "imagen": "../../assets/img/bargas-tipo2.jpg",
+      "imagenAlt": "Render de la vivienda de dos plantas en Diana Residencial, Bargas",
+      "construidos": 114,
+      "patios": 84,
+      "dormitorios": 3,
+      "banos": 2,
+      "rasgos": [
+        "Zona de día y noche perfectamente diferenciadas.",
+        "Amplio salón con salida directa al porche."
+      ],
+      "planos": [
+        {
+          "imagen": "../../assets/img/bargas-tipo2-planos.jpg",
+          "alt": "Plano de la vivienda de dos plantas en Diana Residencial, Bargas"
+        }
+      ]
+    }
+  ],
+  "seo": {
+    "title": "Diana Residencial Bargas: 37 viviendas obra nueva | Kaik Home",
+    "description": "Diana Residencial: 37 viviendas de obra nueva de 1 y 2 plantas en Bargas (Toledo), con 3 dormitorios. Entrega 2T 2027. Descarga el dossier y reserva tu visita.",
+    "ogTitle": "Diana Residencial Bargas | Kaik Home",
+    "ogDescription": "37 viviendas de obra nueva en Bargas, Toledo. Obra en curso, entrega 2T 2027."
+  }
+}

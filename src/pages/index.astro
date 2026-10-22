@@ -1,0 +1,662 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import Icon from '../components/Icon.astro';
+import ContactSection from '../components/ContactSection.astro';
+import toledo from '../assets/img/hero-toledo.jpg';
+import { site } from '../data/site';
+
+const promociones = (await getCollection('promociones')).sort((a, b) => a.data.orden - b.data.orden);
+const proximas = (await getCollection('proximas')).sort((a, b) => a.data.orden - b.data.orden);
+
+// Hero slideshow: Toledo first, then each development.
+const slides = [
+  { src: toledo, alt: 'Vista panorámica de Toledo, ciudad histórica donde opera Kaik Home' },
+  ...promociones.map((p) => ({ src: p.data.hero, alt: p.data.heroAlt })),
+];
+
+const org = {
+  '@type': 'RealEstateAgent',
+  '@id': `${site.url}/#organizacion`,
+  name: site.name,
+  url: `${site.url}/`,
+  logo: `${site.url}/favicon.png`,
+  image: `${site.url}/og-home.jpg`,
+  description:
+    'Promotora inmobiliaria en Toledo con más de 10 años de experiencia. Promueve y construye viviendas de obra nueva.',
+  telephone: '+34687459216',
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    postalCode: site.address.postalCode,
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    addressCountry: 'ES',
+  },
+  areaServed: { '@type': 'AdministrativeArea', name: 'Provincia de Toledo' },
+  sameAs: [site.social.instagram, site.social.facebook],
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    org,
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#web`,
+      url: `${site.url}/`,
+      name: site.name,
+      inLanguage: 'es-ES',
+      publisher: { '@id': `${site.url}/#organizacion` },
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Promociones de obra nueva de Kaik Home',
+      itemListElement: promociones.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${site.url}/${p.id}`,
+        name: `${p.data.nombre} (${p.data.localidad})`,
+      })),
+    },
+  ],
+};
+---
+
+<Base
+  title="Kaik Home | Promotora inmobiliaria y obra nueva en Toledo"
+  description="Promotora inmobiliaria en Toledo con más de 10 años de experiencia. Viviendas de obra nueva en Méntrida y Bargas, con entrega en 2027. Reserva tu visita."
+  ogTitle="Kaik Home | Promotora Inmobiliaria en Toledo"
+  ogDescription="Más de 10 años de experiencia local con una metodología propia enfocada en la calidad y la transparencia absoluta."
+  ogImage="/og-home.jpg"
+  jsonLd={jsonLd}
+  active="home"
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="badge badge-mint hero-in" style="--d: 0"><Icon name="check" size={16} /> Expertos en Toledo</span>
+        <h1 class="hero-in" style="--d: 1">Bienvenidos a <span class="text-green">Kaik Home</span></h1>
+        <p class="hero-in" style="--d: 2">
+          Combinamos más de 10 años de experiencia local con una metodología propia enfocada en la calidad y la
+          transparencia absoluta.
+        </p>
+        <div class="hero-actions hero-in" style="--d: 3">
+          <a href="#promociones" class="btn btn-primary">Ver promociones <Icon name="arrow" size={18} /></a>
+          <a href="#contacto" class="btn btn-outline">Contactar</a>
+        </div>
+      </div>
+
+      <div class="hero-media" data-hero-slides>
+        <div class="hero-frame">
+          {
+            slides.map((s, i) => (
+              <div class:list={['hero-slide', { 'is-active': i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : 'true'}>
+                {
+                  i === 0 ? (
+                    <Img
+                      src={s.src}
+                      alt={s.alt}
+                      widths={[400, 560, 760, 1120]}
+                      sizes="(min-width: 1024px) 560px, calc(100vw - 48px)"
+                      quality={58}
+                      loading="eager"
+                      fetchpriority="high"
+                    />
+                  ) : (
+                    /* Later slides are inert until the page has loaded, so they never compete with the first image. */
+                    <template data-deferred-slide>
+                      <Img src={s.src} alt={s.alt} widths={[400, 560, 760, 1120]} sizes="(min-width: 1024px) 560px, calc(100vw - 48px)" quality={62} />
+                    </template>
+                  )
+                }
+              </div>
+            ))
+          }
+        </div>
+        <div class="hero-floating-badge">
+          <span class="icon-circle"><Icon name="home" size={20} /></span>
+          <span class="hero-floating-badge-text">
+            <span>Metodología propia</span>
+            <strong>+<span data-count="10">10</span> años de experiencia</strong>
+          </span>
+        </div>
+        <div class="hero-dots">
+          {
+            slides.map((_, i) => (
+              <button
+                type="button"
+                class:list={['hero-dot', { 'is-active': i === 0 }]}
+                data-dot={i}
+                aria-label={`Ver imagen ${i + 1} de ${slides.length}`}
+                aria-current={i === 0 ? 'true' : undefined}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMOCIONES DISPONIBLES -->
+  <section class="section" id="promociones">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Promociones disponibles</h2>
+        <p>Viviendas de obra nueva en la provincia de Toledo, con entrega prevista en 2027.</p>
+      </div>
+      <div class="promo-grid">
+        {
+          promociones.map((p, i) => (
+            <a href={`/${p.id}`} class="promo-card reveal" style={`--i: ${i}`}>
+              <div class="promo-img" style={`view-transition-name: hero-${p.id}`}>
+                <Img src={p.data.portada} alt={p.data.portadaAlt} widths={[480, 720, 1100]} sizes="(min-width: 1024px) 570px, 100vw" />
+              </div>
+              <span class="badge badge-white promo-status">
+                <span class:list={['badge-dot', `dot-${p.data.estadoColor}`]} />
+                {p.data.estado}
+              </span>
+              <div class="promo-content">
+                <h3>{p.data.localidad}</h3>
+                <p>{p.data.resumen}</p>
+                <ul class="promo-facts">
+                  <li>{p.data.viviendas} viviendas</li>
+                  <li>{p.data.plantas}</li>
+                  <li>Entrega {p.data.entrega}</li>
+                </ul>
+                <span class="promo-btn">
+                  Ver proyecto <Icon name="arrow" size={16} />
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÓXIMAMENTE -->
+  <section class="section section-soft" id="proximamente">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Próximas promociones</h2>
+        <p>Nuevas promociones que estamos preparando en la región.</p>
+      </div>
+      <div class="promo-grid promo-grid-upcoming">
+        {
+          proximas.map((p, i) => (
+            <div class="promo-card promo-card-upcoming reveal" style={`--i: ${i}`}>
+              <div class="promo-img">
+                <Img src={p.data.imagen} alt={p.data.imagenAlt} widths={[400, 600, 800]} sizes="(min-width: 1024px) 380px, 100vw" />
+              </div>
+              <span class="badge badge-white promo-upcoming-badge"><Icon name="clock" size={15} /> Próximamente</span>
+              <div class="promo-content">
+                <h3>
+                  {p.data.titulo} en {p.data.localidad}
+                </h3>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- SOMOS KAIK HOME -->
+  <section class="section about-block" id="quienes-somos">
+    <div class="container reveal">
+      <div class="about-icon"><Icon name="home" size={26} /></div>
+      <h2>Somos Kaik Home</h2>
+      <p>
+        En Kaik Home no solo vendemos propiedades; guiamos familias hacia sus nuevos comienzos en el corazón de Toledo.
+        Nuestra metodología se basa en la cercanía humana y la precisión institucional, asegurando que cada cliente
+        reciba el trato exclusivo que su proyecto merece.
+      </p>
+    </div>
+  </section>
+
+  <ContactSection
+    origen="default"
+    titulo="Hablemos de tu próximo hogar"
+    texto="Estamos listos para escucharte y asesorarte en cada paso de tu inversión o búsqueda en Toledo."
+    conAsunto
+  />
+</Base>
+
+<style>
+  /* HERO ------------------------------------------------------------------- */
+  .hero {
+    padding: clamp(32px, 2rem + 2vw, 64px) 0 clamp(24px, 1rem + 2vw, 48px);
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 1.6rem + 2.6vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    margin: 22px 0 20px;
+  }
+
+  .hero-copy p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  /* Staggered entrance on load. */
+  .hero-in {
+    animation: rise-in 0.9s var(--ease-smooth) both;
+    animation-delay: calc(var(--d) * 110ms + 100ms);
+  }
+
+  /* Entrance moves without fading from zero, so the first paint (LCP) is never delayed. */
+  @keyframes rise-in {
+    from {
+      opacity: 0.4;
+      transform: translateY(18px);
+    }
+  }
+
+  .hero-media {
+    position: relative;
+  }
+
+  .hero-frame {
+    position: relative;
+    height: clamp(320px, 22rem + 8vw, 520px);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-strong);
+    background: #d7dcd8;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease-smooth);
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero-slide :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Slow push-in on each image the slideshow brings in (the first one paints still, for a fast LCP). */
+  .is-playing .hero-slide :global(img) {
+    transform: scale(1.08);
+    transition: transform 7s linear;
+  }
+
+  .is-playing .hero-slide.is-active :global(img) {
+    transform: scale(1);
+  }
+
+  .hero-floating-badge {
+    position: absolute;
+    z-index: 2;
+    left: 24px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 20px;
+    background: rgb(255 255 255 / 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgb(255 255 255 / 0.6);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hero-floating-badge-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .hero-floating-badge strong {
+    color: var(--green-ink);
+    font-size: 15px;
+  }
+
+  .hero-dots {
+    position: absolute;
+    z-index: 2;
+    right: 16px;
+    bottom: 24px;
+    display: flex;
+  }
+
+  /* 24px touch target with the visible dot drawn inside. */
+  .hero-dot {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transition: width 0.4s var(--ease-smooth);
+  }
+
+  .hero-dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.6);
+    transition:
+      width 0.4s var(--ease-smooth),
+      background-color 0.4s ease;
+  }
+
+  .hero-dot:hover::before {
+    background: #fff;
+  }
+
+  .hero-dot.is-active {
+    width: 30px;
+  }
+
+  .hero-dot.is-active::before {
+    width: 22px;
+    background: #fff;
+  }
+
+  /* PROMOCIONES ------------------------------------------------------------ */
+  .section-soft {
+    background: var(--paper-3);
+  }
+
+  .promo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .promo-card {
+    position: relative;
+    display: block;
+    height: clamp(340px, 18rem + 6vw, 440px);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #c7d0c9;
+    box-shadow: var(--shadow-soft);
+    isolation: isolate;
+  }
+
+  html.js .promo-card.reveal.is-visible {
+    transition:
+      opacity 0.8s var(--ease-smooth),
+      transform 0.5s var(--ease-smooth),
+      box-shadow 0.5s var(--ease-smooth);
+  }
+
+  a.promo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-strong);
+  }
+
+  .promo-img {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .promo-img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-smooth);
+  }
+
+  a.promo-card:hover .promo-img :global(img) {
+    transform: scale(1.06);
+  }
+
+  .promo-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, rgb(0 0 0 / 0.85) 0%, rgb(0 0 0 / 0.45) 45%, rgb(0 0 0 / 0) 75%);
+  }
+
+  .promo-status,
+  .promo-upcoming-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+
+  .promo-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 32px;
+    color: #fff;
+  }
+
+  .promo-content h3 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .promo-content p {
+    font-size: 15px;
+    color: rgb(255 255 255 / 0.9);
+    margin-bottom: 14px;
+    max-width: 42ch;
+  }
+
+  .promo-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green-mint);
+  }
+
+  .promo-facts li + li {
+    position: relative;
+  }
+
+  .promo-facts li + li::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 50%;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.6);
+  }
+
+  .promo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-btn);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 14px;
+    transition:
+      gap 0.3s var(--ease-smooth),
+      background-color 0.2s ease;
+  }
+
+  a.promo-card:hover .promo-btn {
+    gap: 12px;
+    background: var(--green-btn-hover);
+  }
+
+  .promo-grid-upcoming {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .promo-card-upcoming {
+    height: 360px;
+  }
+
+  .promo-card-upcoming .promo-content h3 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  /* SOMOS KAIK HOME --------------------------------------------------------- */
+  .about-block {
+    background: var(--paper);
+    text-align: center;
+  }
+
+  .about-block .container {
+    max-width: 760px;
+  }
+
+  .about-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    border-radius: 16px;
+    background: rgb(85 143 110 / 0.14);
+    color: var(--green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-block h2 {
+    font-size: clamp(26px, 1.2rem + 1.4vw, 36px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .about-block p {
+    font-size: 18px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .hero-media {
+      order: -1;
+    }
+
+    .promo-grid,
+    .promo-grid-upcoming {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-actions .btn {
+      flex: 1 1 auto;
+    }
+
+    .promo-content {
+      padding: 24px;
+    }
+
+    .hero-floating-badge {
+      left: 16px;
+      bottom: 16px;
+      padding: 12px 16px;
+    }
+
+    .hero-dots {
+      bottom: 20px;
+      right: 10px;
+    }
+  }
+</style>
+
+<script>
+  // Hero slideshow: crossfade every 6 s; dots jump to an image. Pauses on hover, focus,
+  // when off-screen and with reduced motion (dots still work).
+  const root = document.querySelector<HTMLElement>('[data-hero-slides]');
+  const slides = root ? Array.from(root.querySelectorAll<HTMLElement>('[data-slide]')) : [];
+  const dots = root ? Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]')) : [];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Materialize the deferred slides once the first image and the page are done.
+  const hydrateSlides = () =>
+    document.querySelectorAll<HTMLTemplateElement>('template[data-deferred-slide]').forEach((t) => {
+      t.replaceWith(t.content.cloneNode(true));
+    });
+  if (document.readyState === 'complete') hydrateSlides();
+  else addEventListener('load', hydrateSlides, { once: true });
+
+  if (root && slides.length > 1) {
+    let index = 0;
+    let paused = false;
+    let timer = 0;
+    const show = (next: number) => {
+      slides[index].classList.remove('is-active');
+      slides[index].setAttribute('aria-hidden', 'true');
+      dots[index]?.classList.remove('is-active');
+      dots[index]?.removeAttribute('aria-current');
+      index = (next + slides.length) % slides.length;
+      slides[index].classList.add('is-active');
+      slides[index].removeAttribute('aria-hidden');
+      dots[index]?.classList.add('is-active');
+      dots[index]?.setAttribute('aria-current', 'true');
+    };
+    const start = () => {
+      if (reduced) return;
+      root.classList.add('is-playing');
+      clearInterval(timer);
+      timer = window.setInterval(() => {
+        if (paused || document.hidden || root.getBoundingClientRect().bottom < 0) return;
+        show(index + 1);
+      }, 6000);
+    };
+    dots.forEach((dot) =>
+      dot.addEventListener('click', () => {
+        show(Number(dot.dataset.dot));
+        start();
+      }),
+    );
+    root.addEventListener('pointerenter', () => (paused = true));
+    root.addEventListener('pointerleave', () => (paused = false));
+    root.addEventListener('focusin', () => (paused = true));
+    root.addEventListener('focusout', () => (paused = false));
+    start();
+  }
+</script>

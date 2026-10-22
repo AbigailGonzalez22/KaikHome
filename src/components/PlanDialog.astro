@@ -1,0 +1,294 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  titulo: string;
+  planos: { imagen: ImageMetadata; alt: string }[];
+}
+const { id, titulo, planos } = Astro.props;
+const full = await Promise.all(
+  planos.map((p) => getImage({ src: p.imagen, width: Math.min(p.imagen.width, 3000), format: 'webp' })),
+);
+---
+
+<dialog class="planos" id={id} aria-labelledby={`${id}-titulo`} data-plan>
+  <div class="planos-panel">
+    <form method="dialog">
+      <button class="planos-close" aria-label="Cerrar planos"><Icon name="close" size={18} /></button>
+    </form>
+    <h2 id={`${id}-titulo`}>Planos — {titulo}</h2>
+
+    <div class="planos-carousel">
+      {
+        planos.map((p, i) => (
+          <figure class:list={['planos-slide', { 'is-active': i === 0 }]} data-sheet hidden={i !== 0}>
+            <a href={full[i].src} target="_blank" rel="noopener" title="Ver a tamaño completo">
+              <Img src={p.imagen} alt={p.alt} widths={[800, 1400, 2000]} sizes="(min-width: 900px) 780px, 92vw" loading="lazy" />
+            </a>
+          </figure>
+        ))
+      }
+      {
+        planos.length > 1 && (
+          <>
+            <button type="button" class="planos-arrow planos-prev" data-plan-prev aria-label="Plano anterior">
+              <Icon name="prev" size={20} />
+            </button>
+            <button type="button" class="planos-arrow planos-next" data-plan-next aria-label="Plano siguiente">
+              <Icon name="next" size={20} />
+            </button>
+          </>
+        )
+      }
+    </div>
+
+    <div class="planos-foot">
+      {
+        planos.length > 1 && (
+          <div class="planos-dots">
+            {planos.map((_, i) => (
+              <button
+                type="button"
+                class:list={['planos-dot', { 'is-active': i === 0 }]}
+                data-plan-dot={i}
+                aria-label={`Ver plano ${i + 1}`}
+              />
+            ))}
+          </div>
+        )
+      }
+      <a class="planos-full" href={full[0].src} target="_blank" rel="noopener" data-plan-full>
+        Ver a tamaño completo
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .planos {
+    width: min(860px, calc(100vw - 32px));
+    max-width: none;
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    color: var(--ink);
+    box-shadow: var(--shadow-strong);
+    overflow: auto;
+  }
+
+  .planos::backdrop {
+    background: rgb(27 28 28 / 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .planos[open] {
+    animation: planos-in 0.35s var(--ease-smooth);
+  }
+
+  .planos[open]::backdrop {
+    animation: fade-in 0.3s var(--ease-smooth);
+  }
+
+  @keyframes planos-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94) translateY(12px);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .planos-panel {
+    position: relative;
+    padding: 40px;
+  }
+
+  .planos-panel h2 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    padding-right: 48px;
+  }
+
+  .planos-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--paper-2);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color 0.2s ease,
+      transform 0.3s var(--ease-smooth);
+  }
+
+  .planos-close:hover {
+    background: var(--line);
+    transform: rotate(90deg);
+  }
+
+  .planos-carousel {
+    position: relative;
+  }
+
+  .planos-slide a {
+    display: block;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--paper-2);
+    cursor: zoom-in;
+  }
+
+  .planos-slide :global(img) {
+    width: 100%;
+    max-height: 62dvh;
+    object-fit: contain;
+  }
+
+  .planos-slide.is-active {
+    animation: slide-in 0.45s var(--ease-smooth);
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(16px);
+    }
+  }
+
+  .planos-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgb(255 255 255 / 0.92);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-soft);
+    transition: background-color 0.2s ease;
+  }
+
+  .planos-arrow:hover {
+    background: #fff;
+  }
+
+  .planos-prev {
+    left: 12px;
+  }
+
+  .planos-next {
+    right: 12px;
+  }
+
+  .planos-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .planos-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .planos-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: none;
+    background: var(--line);
+    padding: 0;
+    transition:
+      background-color 0.2s ease,
+      width 0.3s var(--ease-smooth);
+  }
+
+  .planos-dot.is-active {
+    width: 24px;
+    border-radius: 9px;
+    background: var(--green-dark);
+  }
+
+  .planos-full {
+    margin-left: auto;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green-ink);
+  }
+
+  .planos-full:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .planos-panel {
+      padding: 28px 20px;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-open-plan]').forEach((button) => {
+    const dialog = document.getElementById(button.dataset.openPlan!) as HTMLDialogElement | null;
+    if (!dialog) return;
+    button.addEventListener('click', () => {
+      dialog.showModal();
+      document.dispatchEvent(new CustomEvent('kaik:lock'));
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('[data-plan]').forEach((dialog) => {
+    const sheets = Array.from(dialog.querySelectorAll<HTMLElement>('[data-sheet]'));
+    const dots = Array.from(dialog.querySelectorAll<HTMLButtonElement>('[data-plan-dot]'));
+    const fullLink = dialog.querySelector<HTMLAnchorElement>('[data-plan-full]');
+    let index = 0;
+    const show = (next: number) => {
+      sheets[index].hidden = true;
+      sheets[index].classList.remove('is-active');
+      dots[index]?.classList.remove('is-active');
+      index = (next + sheets.length) % sheets.length;
+      sheets[index].hidden = false;
+      sheets[index].classList.add('is-active');
+      dots[index]?.classList.add('is-active');
+      const href = sheets[index].querySelector('a')?.href;
+      if (fullLink && href) fullLink.href = href;
+    };
+    dialog.querySelector('[data-plan-prev]')?.addEventListener('click', () => show(index - 1));
+    dialog.querySelector('[data-plan-next]')?.addEventListener('click', () => show(index + 1));
+    dots.forEach((dot) => dot.addEventListener('click', () => show(Number(dot.dataset.planDot))));
+    dialog.addEventListener('keydown', (e) => {
+      if (sheets.length < 2) return;
+      if (e.key === 'ArrowRight') show(index + 1);
+      if (e.key === 'ArrowLeft') show(index - 1);
+    });
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => document.dispatchEvent(new CustomEvent('kaik:unlock')));
+  });
+</script>
