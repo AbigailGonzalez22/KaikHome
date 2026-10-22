@@ -6,3 +6,4 @@ dist/
 public/config/config.php
 .DS_Store
 .impeccable/review/
+.claude/
