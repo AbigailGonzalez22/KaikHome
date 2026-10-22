@@ -35,6 +35,10 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # Encrypted FTP (explicit TLS). "loose" accepts the shared-hosting certificate,
+          # whose name may not match the FTP host.
+          protocol: ftps
+          security: loose
           # Never touch the SMTP credentials that live only on the server.
           exclude: |
             **/config/config.php
